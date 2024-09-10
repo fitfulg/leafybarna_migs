@@ -1,0 +1,62 @@
+<!-- List tables in leafybarna_db -->
+<p><strong>THIS COMMAND LISTS ALL THE TABLES IN THE LEAFYBARNA_DB DATABASE.</strong></p>
+<pre>\dt</pre>
+
+<!-- Table structure for trees_in_parks -->
+<p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE TREES_IN_PARKS TABLE, INCLUDING THE COLUMNS AND THEIR TYPES.</strong></p>
+<pre>\d trees_in_parks</pre>
+
+<!-- Export distinct planting dates for trees_in_parks to CSV -->
+<p><strong>THIS COMMAND EXPORTS DISTINCT PLANTING DATES FROM THE TREES_IN_PARKS TABLE TO A CSV FILE.</strong></p>
+<pre>
+\copy (SELECT DISTINCT data_plantacio FROM trees_in_parks WHERE data_plantacio IS NOT NULL ORDER BY data_plantacio) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/treesInParks_fechas.csv' WITH CSV;
+</pre>
+
+<!-- Filter by District 8 -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS LOCATED IN DISTRICT 8.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?district=8" target="_blank">Filter by District 8</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE codi_barri = 8 LIMIT 10;
+</pre>
+
+<!-- Filter by species (e.g., Fraxinus) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY SPECIES, FOR EXAMPLE, 'FRAXINUS'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?species=Fraxinus" target="_blank">Filter by Species: Fraxinus</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE nom_cientific LIKE '%Fraxinus%' LIMIT 10;
+</pre>
+
+<!-- Filter by address (e.g., Pg Fabra i Puig) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY ADDRESS, FOR EXAMPLE, 'PG FABRA I PUIG'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?address=Pg%20Fabra%20i%20Puig" target="_blank">Filter by Address: Pg Fabra i Puig</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE adreca LIKE '%Pg Fabra i Puig%' LIMIT 10;
+</pre>
+
+<!-- Filter by neighborhood (e.g., Nou Barris) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY NEIGHBORHOOD, FOR EXAMPLE, 'NOU BARRIS'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?neighborhood=Nou%20Barris" target="_blank">Filter by Neighborhood: Nou Barris</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE nom_parc LIKE '%Nou Barris%' LIMIT 10;
+</pre>
+
+<!-- Filter by irrigation type (e.g., GOTEIG) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY THE IRRIGATION TYPE, FOR EXAMPLE, 'GOTEIG'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?irrigation=GOTEIG" target="_blank">Filter by Irrigation: GOTEIG</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE tipus_reg LIKE '%GOTEIG%' LIMIT 10;
+</pre>
+
+<!-- Filter by planting date (e.g., 2020-05-10) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY PLANTING DATE, FOR EXAMPLE, '2020-05-10'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?plant_date=2020-05-10" target="_blank">Filter by Planting Date: 2020-05-10</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE data_plantacio = '2020-05-10' LIMIT 10;
+</pre>
+
+<!-- Combination: Filter by district and species -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY BOTH DISTRICT AND SPECIES, FOR EXAMPLE, DISTRICT 8 AND SPECIES 'FRAXINUS'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?district=8&species=Fraxinus" target="_blank">Filter by District 8 and Species: Fraxinus</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE codi_barri = 8 AND nom_cientific LIKE '%Fraxinus%' LIMIT 10;
+</pre>
