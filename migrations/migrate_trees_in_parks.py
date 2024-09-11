@@ -1,58 +1,94 @@
+import sys
+import os
 import json
 import requests
-from migrations.database_utils import connect_to_db, insert_data
+from database_utils import connect_to_db, insert_data
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 conn = connect_to_db()
 cursor = conn.cursor()
 
-url = 'https://opendata-ajuntament.barcelona.cat/data/dataset/5d43ed16-f93a-442f-8853-4bf2191b2d39/resource/b42797a8-3be7-4504-ad7c-12174de222de/download'
+url = 'https://opendata-ajuntament.barcelona.cat/resources/bcn/Arbrat/OD_Arbrat_Parcs_BCN.json'
 
 response = requests.get(url)
 data = response.json()
+
+# Debugging: Print the structure of the data to understand its layout
+print(f"Data structure example: {data[0] if len(data) > 0 else 'No data'}")
 
 try:
     with conn:
         with cursor:
             query = """
-                INSERT INTO parks_and_gardens 
-                (register_id, name, created, modified, status, status_name, 
-                 core_type, core_type_name, district_name, district_id, 
-                 neighborhood_name, neighborhood_id, address_name, zip_code, 
-                 latitud, longitud)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO trees_in_parks 
+                (codi, nom_cientific, nom_castella, nom_catala, adreca, tipus_reg, 
+                 data_plantacio, x_etrs89, y_etrs89, latitud, longitud, nom_parc, 
+                 codi_barri, nom_barri, codi_districte, nom_districte, espai_verd, 
+                 catalogacio, tipus_element, categoria_arbrat, cat_especie_id, tipus_aigua)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
 
-            for park in data:
-                for address in park['addresses']:
-                    try:
-                        district_id = int(address.get('district_id')) if address.get('district_id') else None
-                        neighborhood_id = int(address.get('neighborhood_id')) if address.get('neighborhood_id') else None
+            for tree in data:
+                print(f"Processing tree data: {tree}")
+                
+                try:
+                    # Check if required fields are present, otherwise provide defaults
+                    codi = tree.get('codi', 'Unknown')
+                    nom_cientific = tree.get('nom_cientific', 'Unknown')
+                    nom_castella = tree.get('nom_castella', 'Unknown')
+                    nom_catala = tree.get('nom_catala', 'Unknown')
+                    adreca = tree.get('adreca', 'Unknown')
+                    tipus_reg = tree.get('tipus_reg', 'Unknown')
+                    data_plantacio = tree.get('data_plantacio') if tree.get('data_plantacio') else None
+                    x_etrs89 = float(tree['x_etrs89']) if tree.get('x_etrs89') else None
+                    y_etrs89 = float(tree['y_etrs89']) if tree.get('y_etrs89') else None
+                    latitud = float(tree['latitud']) if tree.get('latitud') else None
+                    longitud = float(tree['longitud']) if tree.get('longitud') else None
+                    nom_parc = tree.get('espai_verd', 'Unknown')
+                    codi_barri = int(tree['codi_barri']) if tree.get('codi_barri') else None
+                    nom_barri = tree.get('nom_barri', 'Unknown')
+                    codi_districte = int(tree['codi_districte']) if tree.get('codi_districte') else None
+                    nom_districte = tree.get('nom_districte', 'Unknown')
+                    espai_verd = tree.get('espai_verd', 'Unknown')
+                    catalogacio = tree.get('catalogacio', 'Unknown')
+                    tipus_element = tree.get('tipus_element', 'Unknown')
+                    categoria_arbrat = tree.get('categoria_arbrat', 'Unknown')
+                    cat_especie_id = int(tree['cat_especie_id']) if tree.get('cat_especie_id') else None
+                    tipus_aigua = tree.get('tipus_aigua', 'Unknown')
 
-                        insert_data(cursor, query, (
-                            park.get('register_id'),
-                            park.get('name'),
-                            park.get('created'),
-                            park.get('modified'),
-                            park.get('status'),
-                            park.get('status_name'),
-                            park.get('core_type'),
-                            park.get('core_type_name'),
-                            address.get('district_name'),
-                            district_id,
-                            address.get('neighborhood_name'),
-                            neighborhood_id,
-                            address.get('address_name'),
-                            address.get('zip_code'),
-                            address['location']['geometries'][0]['coordinates'][1],  # latitud
-                            address['location']['geometries'][0]['coordinates'][0]   # longitud
-                        ))
+                    # Insert data into the database
+                    insert_data(cursor, query, (
+                        codi,
+                        nom_cientific,
+                        nom_castella,
+                        nom_catala,
+                        adreca,
+                        tipus_reg,
+                        data_plantacio,
+                        x_etrs89,
+                        y_etrs89,
+                        latitud,
+                        longitud,
+                        nom_parc,
+                        codi_barri,
+                        nom_barri,
+                        codi_districte,
+                        nom_districte,
+                        espai_verd,
+                        catalogacio,
+                        tipus_element,
+                        categoria_arbrat,
+                        cat_especie_id,
+                        tipus_aigua
+                    ))
 
-                        print(f"Inserted park: {park.get('name')}")
+                    print(f"Inserted tree: {codi}")
 
-                    except ValueError as ve:
-                        print(f"Error with ID conversion: {ve}")
-                    except Exception as e:
-                        print(f"Error inserting park: {e}")
+                except ValueError as ve:
+                    print(f"Error with ID conversion: {ve}")
+                except Exception as e:
+                    print(f"Error inserting tree: {e}")
 
         conn.commit()
         print("Data committed successfully.")

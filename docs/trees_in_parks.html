@@ -12,39 +12,60 @@
 \copy (SELECT DISTINCT data_plantacio FROM trees_in_parks WHERE data_plantacio IS NOT NULL ORDER BY data_plantacio) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/treesInParks_fechas.csv' WITH CSV;
 </pre>
 
-<!-- Filter by District 8 -->
-<p><strong>THIS QUERY FILTERS TREES IN PARKS LOCATED IN DISTRICT 8.</strong></p>
-<p><a href="http://127.0.0.1:5000/trees-in-parks?district=8" target="_blank">Filter by District 8</a></p>
+<!-- Filter by code (e.g., '0000024AR') -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY CODE, FOR EXAMPLE, '0000024AR'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?codi=0000024AR" target="_blank">Filter by Code: 0000024AR</a></p>
 <pre>
-SELECT * FROM trees_in_parks WHERE codi_barri = 8 LIMIT 10;
+SELECT * FROM trees_in_parks WHERE codi = '0000024AR' LIMIT 10;
 </pre>
 
-<!-- Filter by species (e.g., Fraxinus) -->
-<p><strong>THIS QUERY FILTERS TREES IN PARKS BY SPECIES, FOR EXAMPLE, 'FRAXINUS'.</strong></p>
-<p><a href="http://127.0.0.1:5000/trees-in-parks?species=Fraxinus" target="_blank">Filter by Species: Fraxinus</a></p>
+<!-- Filter by scientific name (e.g., 'Populus nigra') -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY SCIENTIFIC NAME, FOR EXAMPLE, 'POPULUS NIGRA'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?scientific_name=Populus nigra" target="_blank">Filter by Scientific Name: Populus nigra</a></p>
 <pre>
-SELECT * FROM trees_in_parks WHERE nom_cientific LIKE '%Fraxinus%' LIMIT 10;
+SELECT * FROM trees_in_parks WHERE nom_cientific LIKE '%Populus nigra%' LIMIT 10;
 </pre>
 
-<!-- Filter by address (e.g., Pg Fabra i Puig) -->
-<p><strong>THIS QUERY FILTERS TREES IN PARKS BY ADDRESS, FOR EXAMPLE, 'PG FABRA I PUIG'.</strong></p>
-<p><a href="http://127.0.0.1:5000/trees-in-parks?address=Pg%20Fabra%20i%20Puig" target="_blank">Filter by Address: Pg Fabra i Puig</a></p>
+<!-- Filter by district (e.g., Nou Barris) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY DISTRICT NAME, FOR EXAMPLE, 'NOU BARRIS'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?district=NOU%20BARRIS" target="_blank">Filter by District: Nou Barris</a></p>
 <pre>
-SELECT * FROM trees_in_parks WHERE adreca LIKE '%Pg Fabra i Puig%' LIMIT 10;
+SELECT * FROM trees_in_parks WHERE nom_districte LIKE '%NOU BARRIS%' LIMIT 10;
 </pre>
 
-<!-- Filter by neighborhood (e.g., Nou Barris) -->
-<p><strong>THIS QUERY FILTERS TREES IN PARKS BY NEIGHBORHOOD, FOR EXAMPLE, 'NOU BARRIS'.</strong></p>
-<p><a href="http://127.0.0.1:5000/trees-in-parks?neighborhood=Nou%20Barris" target="_blank">Filter by Neighborhood: Nou Barris</a></p>
+<!-- Filter by element type (e.g., ARBRE PARC) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY ELEMENT TYPE, FOR EXAMPLE, 'ARBRE PARC'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?element_type=ARBRE PARC" target="_blank">Filter by Element Type: ARBRE PARC</a></p>
 <pre>
-SELECT * FROM trees_in_parks WHERE nom_parc LIKE '%Nou Barris%' LIMIT 10;
+SELECT * FROM trees_in_parks WHERE tipus_element LIKE '%ARBRE PARC%' LIMIT 10;
 </pre>
 
-<!-- Filter by irrigation type (e.g., GOTEIG) -->
-<p><strong>THIS QUERY FILTERS TREES IN PARKS BY THE IRRIGATION TYPE, FOR EXAMPLE, 'GOTEIG'.</strong></p>
-<p><a href="http://127.0.0.1:5000/trees-in-parks?irrigation=GOTEIG" target="_blank">Filter by Irrigation: GOTEIG</a></p>
+<!-- Filter by neighborhood (e.g., La Guineueta) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY NEIGHBORHOOD, FOR EXAMPLE, 'LA GUINEUETA'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?neighborhood=LA%20GUINEUETA" target="_blank">Filter by Neighborhood: La Guineueta</a></p>
 <pre>
-SELECT * FROM trees_in_parks WHERE tipus_reg LIKE '%GOTEIG%' LIMIT 10;
+SELECT * FROM trees_in_parks WHERE nom_barri LIKE '%LA GUINEUETA%' LIMIT 10;
+</pre>
+
+<!-- Filter by coordinates (e.g., 41.4372530, 2.1653025) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY COORDINATES.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?lat=41.4372530&lon=2.1653025" target="_blank">Filter by Coordinates</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE latitud = '41.4372530' AND longitud = '2.1653025' LIMIT 10;
+</pre>
+
+<!-- Filter by Catalan name (e.g., Pollancre gavatx) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY CATALAN NAME, FOR EXAMPLE, 'POLLANCRE GAVATX'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?catalan_name=Pollancre gavatx" target="_blank">Filter by Catalan Name: Pollancre gavatx</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE nom_catala LIKE '%Pollancre gavatx%' LIMIT 10;
+</pre>
+
+<!-- Filter by irrigation type (e.g., GOTEIG AVARIAT) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY IRRIGATION TYPE, FOR EXAMPLE, 'GOTEIG AVARIAT'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?irrigation=GOTEIG AVARIAT" target="_blank">Filter by Irrigation Type: GOTEIG AVARIAT</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE tipus_reg LIKE '%GOTEIG AVARIAT%' LIMIT 10;
 </pre>
 
 <!-- Filter by planting date (e.g., 2020-05-10) -->
@@ -54,9 +75,23 @@ SELECT * FROM trees_in_parks WHERE tipus_reg LIKE '%GOTEIG%' LIMIT 10;
 SELECT * FROM trees_in_parks WHERE data_plantacio = '2020-05-10' LIMIT 10;
 </pre>
 
-<!-- Combination: Filter by district and species -->
-<p><strong>THIS QUERY FILTERS TREES IN PARKS BY BOTH DISTRICT AND SPECIES, FOR EXAMPLE, DISTRICT 8 AND SPECIES 'FRAXINUS'.</strong></p>
-<p><a href="http://127.0.0.1:5000/trees-in-parks?district=8&species=Fraxinus" target="_blank">Filter by District 8 and Species: Fraxinus</a></p>
+<!-- Filter by cataloging status (e.g., empty or specific status) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY CATALOGING STATUS.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?catalogacio=" target="_blank">Filter by Cataloging Status</a></p>
 <pre>
-SELECT * FROM trees_in_parks WHERE codi_barri = 8 AND nom_cientific LIKE '%Fraxinus%' LIMIT 10;
+SELECT * FROM trees_in_parks WHERE catalogacio = '' LIMIT 10;
+</pre>
+
+<!-- Filter by irrigation water type (e.g., NULL or a specific type) -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY IRRIGATION WATER TYPE, FOR EXAMPLE, IF THE WATER TYPE IS NULL.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?water_type=NULL" target="_blank">Filter by Water Type: NULL</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE tipus_aigua IS NULL LIMIT 10;
+</pre>
+
+<!-- Filter by species and district -->
+<p><strong>THIS QUERY FILTERS TREES IN PARKS BY BOTH SPECIES AND DISTRICT, FOR EXAMPLE, SPECIES 'FRAXINUS' AND DISTRICT '08'.</strong></p>
+<p><a href="http://127.0.0.1:5000/trees-in-parks?species=Fraxinus&district=08" target="_blank">Filter by Species: Fraxinus and District: 08</a></p>
+<pre>
+SELECT * FROM trees_in_parks WHERE nom_cientific LIKE '%Fraxinus%' AND codi_districte = '08' LIMIT 10;
 </pre>
