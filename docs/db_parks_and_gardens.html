@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeafyBarna Parks and Gardens Queries</title>
+</head>
+<body>
+
+    <!-- Title -->
+    <h1>LeafyBarna: Parks and Gardens Database Queries</h1>
+
+    <!-- List all tables in leafybarna_db -->
+    <p><strong>THIS COMMAND LISTS ALL THE TABLES IN THE LEAFYBARNA_DB DATABASE:</strong></p>
+    <pre>\dt</pre>
+
+    <!-- Table structure for parks_and_gardens -->
+    <p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE PARKS_AND_GARDENS TABLE, INCLUDING THE COLUMNS AND THEIR TYPES:</strong></p>
+    <pre>\d parks_and_gardens</pre>
+
+    <!-- Select all columns from parks_and_gardens -->
+    <p><strong>THIS COMMAND SELECTS ALL COLUMNS FROM THE PARKS_AND_GARDENS TABLE:</strong></p>
+    <pre>SELECT * FROM parks_and_gardens;</pre>
+
+    <!-- Select specific columns from parks_and_gardens -->
+    <p><strong>THIS COMMAND SELECTS SPECIFIC COLUMNS FROM THE PARKS_AND_GARDENS TABLE:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    created,
+    status,
+    core_type_name,
+    body,
+    addresses,
+    geo_epgs_4326_latlon
+FROM parks_and_gardens;
+    </pre>
+
+    <!-- Query to search for a specific park by name -->
+    <p><strong>THIS COMMAND SEARCHES FOR A SPECIFIC PARK BY NAME (E.G., 'Jardins de Vil·la Florida'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    created,
+    status,
+    core_type_name,
+    body
+FROM parks_and_gardens
+WHERE name = 'Jardins de Vil·la Florida';
+    </pre>
+
+    <!-- Query to list parks created after a specific date -->
+    <p><strong>THIS COMMAND LISTS PARKS CREATED AFTER A SPECIFIC DATE (E.G., '2010-01-01'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    created,
+    status,
+    core_type_name,
+    body
+FROM parks_and_gardens
+WHERE created > '2010-01-01';
+    </pre>
+
+    <!-- Query to filter parks by district name -->
+    <p><strong>THIS COMMAND FILTERS PARKS BY DISTRICT NAME (E.G., 'Sarrià-Sant Gervasi'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    addresses
+FROM parks_and_gardens
+WHERE addresses->0->>'district_name' = 'Sarrià-Sant Gervasi';
+    </pre>
+
+    <!-- Query to filter parks that have specific status -->
+    <p><strong>THIS COMMAND FILTERS PARKS BY STATUS (E.G., 'published'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    status,
+    core_type_name
+FROM parks_and_gardens
+WHERE status = 'published';
+    </pre>
+
+    <!-- Query to filter parks that contain a certain classification -->
+    <p><strong>THIS COMMAND FILTERS PARKS THAT CONTAIN A SPECIFIC CLASSIFICATION (E.G., 'Jardins'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    classifications_data
+FROM parks_and_gardens
+WHERE classifications_data::text ILIKE '%Jardins%';
+    </pre>
+
+    <!-- Query to select parks that have non-null coordinates -->
+    <p><strong>THIS COMMAND SELECTS PARKS THAT HAVE NON-NULL COORDINATES:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    geo_epgs_4326_latlon
+FROM parks_and_gardens
+WHERE geo_epgs_4326_latlon IS NOT NULL;
+    </pre>
+
+    <!-- Query to check image_data where images exist -->
+    <p><strong>THIS COMMAND SELECTS PARKS WHERE IMAGE DATA EXISTS:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM parks_and_gardens
+WHERE image_data IS NOT NULL;
+    </pre>
+
+    <!-- Query to filter parks by a specific image URL -->
+    <p><strong>THIS COMMAND FILTERS PARKS BY A SPECIFIC IMAGE URL:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM parks_and_gardens
+WHERE image_data->>'image' = 'https://estatics-nasia.dtibcn.cat/nasia-pro/media/99099131947-Lc3a-Jardins%20Josep%20Goday-7-5-10-VZ%20(04).jpg';
+    </pre>
+
+    <!-- Query to get parks with specific classification and image -->
+    <p><strong>THIS COMMAND GETS PARKS THAT HAVE A SPECIFIC CLASSIFICATION AND CONTAIN IMAGE DATA:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    classifications_data,
+    image_data
+FROM parks_and_gardens
+WHERE classifications_data::text ILIKE '%Jardins%'
+AND image_data IS NOT NULL;
+    </pre>
+
+    <!-- Query to check coordinates and classifications -->
+    <p><strong>THIS COMMAND SELECTS PARKS THAT HAVE BOTH COORDINATES AND A SPECIFIC CLASSIFICATION:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    geo_epgs_4326_latlon,
+    classifications_data
+FROM parks_and_gardens
+WHERE geo_epgs_4326_latlon IS NOT NULL
+AND classifications_data::text ILIKE '%Parc%';
+    </pre>
+
+    <!-- Query to check if specific alt text exists in image_data -->
+    <p><strong>THIS COMMAND SELECTS PARKS THAT HAVE SPECIFIC ALT TEXT IN IMAGE DATA:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM parks_and_gardens
+WHERE image_data->>'alt' = 'Internet';
+    </pre>
+
+    <!-- Query to find parks with non-null image_optimized in image_data -->
+    <p><strong>THIS COMMAND SELECTS PARKS THAT HAVE OPTIMIZED IMAGES IN IMAGE DATA:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM parks_and_gardens
+WHERE image_data->>'image_optimized' IS NOT NULL;
+    </pre>
+
+    <!-- Query to export distinct created dates to a CSV -->
+    <p><strong>THIS COMMAND EXPORTS DISTINCT CREATED DATES FROM THE PARKS_AND_GARDENS TABLE TO A CSV FILE:</strong></p>
+    <pre>\copy (SELECT DISTINCT created FROM parks_and_gardens WHERE created IS NOT NULL ORDER BY created) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/parksAndGardens_created.csv' WITH CSV;</pre>
+
+</body>
+</html>
