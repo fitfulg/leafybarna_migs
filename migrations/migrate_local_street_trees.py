@@ -1,5 +1,5 @@
 import json
-from migrations.database_utils import connect_to_db, insert_data
+from database_utils import connect_to_db, insert_data
 
 conn = connect_to_db()
 cursor = conn.cursor()

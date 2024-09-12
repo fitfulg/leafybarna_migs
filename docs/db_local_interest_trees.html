@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeafyBarna Local Interest Trees Queries</title>
+</head>
+<body>
+
+    <!-- Title -->
+    <h1>LeafyBarna: Local Interest Trees Database Queries</h1>
+
+    <!-- List all tables in leafybarna_db -->
+    <p><strong>THIS COMMAND LISTS ALL THE TABLES IN THE LEAFYBARNA_DB DATABASE:</strong></p>
+    <pre>\dt</pre>
+
+    <!-- Table structure for local_interest_trees -->
+    <p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE LOCAL_INTEREST_TREES TABLE, INCLUDING THE COLUMNS AND THEIR TYPES:</strong></p>
+    <pre>\d local_interest_trees</pre>
+
+    <!-- Select all columns from local_interest_trees -->
+    <p><strong>THIS COMMAND SELECTS ALL COLUMNS FROM THE LOCAL_INTEREST_TREES TABLE:</strong></p>
+    <pre>SELECT * FROM local_interest_trees;</pre>
+
+    <!-- Select specific columns from local_interest_trees -->
+    <p><strong>THIS COMMAND SELECTS SPECIFIC COLUMNS FROM THE LOCAL_INTEREST_TREES TABLE:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    created,
+    status,
+    core_type_name,
+    body,
+    geo_epgs_4326_latlon
+FROM local_interest_trees;
+    </pre>
+
+    <!-- Query to search for a specific tree by name -->
+    <p><strong>THIS COMMAND SEARCHES FOR A SPECIFIC TREE BY NAME (E.G., 'Carpí del jardí Botànic Històric'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    created,
+    status,
+    core_type_name,
+    body
+FROM local_interest_trees
+WHERE name = 'Carpí del jardí Botànic Històric';
+    </pre>
+
+    <!-- Query to list trees created after a specific date -->
+    <p><strong>THIS COMMAND LISTS TREES CREATED AFTER A SPECIFIC DATE (E.G., '2015-01-01'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    created,
+    status,
+    core_type_name,
+    body
+FROM local_interest_trees
+WHERE created > '2015-01-01';
+    </pre>
+
+    <!-- Query to filter trees by a specific classification -->
+    <p><strong>THIS COMMAND FILTERS TREES THAT CONTAIN A SPECIFIC CLASSIFICATION (E.G., 'Arbres d\'interès local'):</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    classifications_data
+FROM local_interest_trees
+WHERE classifications_data::text ILIKE '%Arbres d\'interès local%';
+    </pre>
+
+    <!-- Query to select trees that have non-null coordinates -->
+    <p><strong>THIS COMMAND SELECTS TREES THAT HAVE NON-NULL COORDINATES:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    geo_epgs_4326_latlon
+FROM local_interest_trees
+WHERE geo_epgs_4326_latlon IS NOT NULL;
+    </pre>
+
+    <!-- Query to check image_data where images exist -->
+    <p><strong>THIS COMMAND SELECTS TREES WHERE IMAGE DATA EXISTS:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM local_interest_trees
+WHERE image_data IS NOT NULL;
+    </pre>
+
+    <!-- Query to filter trees by a specific image URL -->
+    <p><strong>THIS COMMAND FILTERS TREES BY A SPECIFIC IMAGE URL:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM local_interest_trees
+WHERE image_data->>'image' = 'https://example.com/image.jpg';
+    </pre>
+
+    <!-- Query to find trees with specific classification and image -->
+    <p><strong>THIS COMMAND GETS TREES THAT HAVE A SPECIFIC CLASSIFICATION AND CONTAIN IMAGE DATA:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    classifications_data,
+    image_data
+FROM local_interest_trees
+WHERE classifications_data::text ILIKE '%Arbres d\'interès local%'
+AND image_data IS NOT NULL;
+    </pre>
+
+    <!-- Query to find trees with optimized images in image_data -->
+    <p><strong>THIS COMMAND SELECTS TREES THAT HAVE OPTIMIZED IMAGES IN IMAGE DATA:</strong></p>
+    <pre>
+SELECT 
+    register_id,
+    name,
+    image_data
+FROM local_interest_trees
+WHERE image_data->>'image_optimized' IS NOT NULL;
+    </pre>
+
+    <!-- Query to export distinct created dates to a CSV -->
+    <p><strong>THIS COMMAND EXPORTS DISTINCT CREATED DATES FROM THE LOCAL_INTEREST_TREES TABLE TO A CSV FILE:</strong></p>
+    <pre>\copy (SELECT DISTINCT created FROM local_interest_trees WHERE created IS NOT NULL ORDER BY created) TO '/path/to/your/file/localInterestTrees_created.csv' WITH CSV;</pre>
+
+</body>
+</html>

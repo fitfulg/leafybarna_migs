@@ -5,5 +5,8 @@
     "spellright.documentTypes": [
         "latex",
         "plaintext"
+    ],
+    "python.analysis.extraPaths": [
+        "./migrations"
     ]
 }

@@ -7,9 +7,9 @@
 <pre>\d local_interest_trees</pre>
 
 <!-- Export distinct register IDs for local_interest_trees to CSV -->
-<p><strong>THIS COMMAND EXPORTS DISTINCT REGISTER IDS FROM THE LOCAL_INTEREST_TREES TABLE TO A CSV FILE.</strong></p>
+<p><strong>THIS COMMAND EXPORTS DISTINCT CREATED DATES FROM THE LOCAL_INTEREST_TREES TABLE TO A CSV FILE.</strong></p>
 <pre>
-\copy (SELECT DISTINCT register_id FROM local_interest_trees WHERE register_id IS NOT NULL ORDER BY register_id) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/localInterestTrees_registerIds.csv' WITH CSV;
+    \copy (SELECT DISTINCT created FROM local_interest_trees WHERE created IS NOT NULL ORDER BY created) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/localInterestTrees_created.csv' WITH CSV;
 </pre>
 
 <!-- Filter by district (e.g., District 7) -->
