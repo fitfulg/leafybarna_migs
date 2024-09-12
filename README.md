@@ -1,4 +1,4 @@
-# LeafyBarna database
+# LeafyBarna into local database
 
 ## Data sources where to migrate from:
 
