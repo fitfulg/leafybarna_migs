@@ -10,7 +10,7 @@ from datetime import datetime
 conn = connect_to_db()
 cursor = conn.cursor()
 
-output_dir = 'static'
+output_dir = 'sync'
 os.makedirs(output_dir, exist_ok=True)
 
 def fetch_db_dates(table_name, date_column):
