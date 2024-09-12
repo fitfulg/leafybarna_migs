@@ -1,5 +1,5 @@
 import json
-from database_utils import connect_to_db, insert_data
+from database_utils import connect_to_db, insert_data, safe_serialize, parse_date
 
 conn = connect_to_db()
 cursor = conn.cursor()
@@ -30,22 +30,23 @@ with open('OD_Arbrat_Viari_BCN.json', 'r', encoding='utf-8') as f:
                             print(f"Skipping record: missing fields {missing_fields}")
                             continue
 
-                        data_plantacio = data.get('data_plantacio')
-                        if data_plantacio:
-                            data_plantacio = data_plantacio.split("T")[0]
+                        for key in data:
+                            data[key] = safe_serialize(data[key])
+
+                        data_plantacio = parse_date(data.get('data_plantacio'))
 
                         insert_data(cursor, query, (
-                            data.get('codi'),
-                            data.get('adreca'),
-                            data.get('nom_cientific'),
-                            data.get('nom_castella'),
-                            data.get('nom_catala'),
-                            data.get('categoria_arbrat'),
-                            data.get('tipus_reg'),
-                            data.get('nom_barri'),
+                            data['codi'],
+                            data['adreca'],
+                            data['nom_cientific'],
+                            data['nom_castella'],
+                            data['nom_catala'],
+                            data['categoria_arbrat'],
+                            data['tipus_reg'],
+                            data['nom_barri'],
                             int(data['codi_districte']) if data.get('codi_districte') else None,
-                            data.get('nom_districte'),
-                            data.get('catalogacio'),
+                            data['nom_districte'],
+                            data['catalogacio'],
                             data_plantacio
                         ))
 

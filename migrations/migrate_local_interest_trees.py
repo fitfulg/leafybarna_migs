@@ -1,44 +1,11 @@
-import json
 import requests
-from database_utils import connect_to_db
-from datetime import datetime
+from database_utils import connect_to_db, insert_data, safe_serialize, parse_date, record_exists
 
 conn = connect_to_db()
 conn.autocommit = True
 cursor = conn.cursor()
 
-log_inserts = {
-    'success': 0,
-    'updated': 0,
-    'failed': [],
-    'errors': []
-}
-
-def parse_date(date_string):
-    try:
-        return datetime.fromisoformat(date_string.replace("Z", "+00:00")) if date_string else None
-    except ValueError:
-        return None
-
-def safe_serialize(data):
-    try:
-        if isinstance(data, (list, dict)):
-            return json.dumps(data)
-        elif isinstance(data, str):
-            return data.replace('\r\n', '\\n').replace("'", "''")
-        elif data is None:
-            return None
-        else:
-            return str(data)
-    except TypeError:
-        return None
-
-def record_exists(register_id):
-    cursor.execute("SELECT 1 FROM local_interest_trees WHERE register_id = %s", (register_id,))
-    return cursor.fetchone() is not None
-
 url = 'https://opendata-ajuntament.barcelona.cat/data/dataset/7052709e-1087-4ef3-862a-1a6c3e9a7200/resource/7ffcae4a-5b1f-4d2e-8b3e-2659ba521736/download'
-
 response = requests.get(url)
 data = response.json()
 
@@ -60,57 +27,43 @@ update_query = """
     image_data = %s WHERE register_id = %s
 """
 
+log_inserts = {
+    'success': 0,
+    'updated': 0,
+    'failed': [],
+    'errors': []
+}
+
 try:
     for tree in data:
-        try:
-            register_id = tree.get('register_id')
-            prefix = safe_serialize(tree.get('prefix'))
-            suffix = safe_serialize(tree.get('suffix'))
-            name = safe_serialize(tree.get('name', 'Unknown'))
-            created = parse_date(tree.get('created'))
-            modified = parse_date(tree.get('modified'))
-            status = safe_serialize(tree.get('status'))
-            status_name = safe_serialize(tree.get('status_name'))
-            core_type = safe_serialize(tree.get('core_type'))
-            core_type_name = safe_serialize(tree.get('core_type_name'))
-            body = safe_serialize(tree.get('body'))
+        register_id = tree.get('register_id')
+        prefix = safe_serialize(tree.get('prefix'))
+        suffix = safe_serialize(tree.get('suffix'))
+        name = safe_serialize(tree.get('name', 'Unknown'))
+        created = parse_date(tree.get('created'))
+        modified = parse_date(tree.get('modified'))
+        # Serialize complex data types
+        other_data = {field: safe_serialize(tree.get(field, default)) for field, default in [
+            ('status', None), ('status_name', None), ('core_type', None),
+            ('core_type_name', None), ('body', None), ('tickets_data', []), ('addresses', []),
+            ('entity_types_data', []), ('attribute_categories', []), ('values', []),
+            ('classifications_data', []), ('secondary_filters_data', []), ('geo_epgs_25831', None),
+            ('geo_epgs_23031', None), ('geo_epgs_4326_latlon', None), ('image_data', {})
+        ]}
 
-            tickets_data = safe_serialize(tree.get('tickets_data', []))
-            addresses = safe_serialize(tree.get('addresses', []))
-            entity_types_data = safe_serialize(tree.get('entity_types_data', []))
-            attribute_categories = safe_serialize(tree.get('attribute_categories', []))
-            values = safe_serialize(tree.get('values', []))
-            classifications_data = safe_serialize(tree.get('classifications_data', []))
-            secondary_filters_data = safe_serialize(tree.get('secondary_filters_data', []))
-            
-            geo_epgs_25831 = safe_serialize(tree.get('geo_epgs_25831'))
-            geo_epgs_23031 = safe_serialize(tree.get('geo_epgs_23031'))
-            geo_epgs_4326_latlon = safe_serialize(tree.get('geo_epgs_4326_latlon'))
-            
-            image_data = safe_serialize(tree.get('image_data', {}))
+        if record_exists(cursor, 'local_interest_trees', register_id):
+            cursor.execute(update_query, tuple(other_data.values()) + (register_id,))
+            log_inserts['updated'] += 1
+        else:
+            cursor.execute(insert_query, (register_id,) + tuple(other_data.values()))
+            log_inserts['success'] += 1
 
-            if record_exists(register_id):
-                cursor.execute(update_query, (
-                    prefix, suffix, name, created, modified, status, status_name, core_type, core_type_name, body, 
-                    tickets_data, addresses, entity_types_data, attribute_categories, values, classifications_data, 
-                    secondary_filters_data, geo_epgs_25831, geo_epgs_23031, geo_epgs_4326_latlon, image_data, register_id
-                ))
-                log_inserts['updated'] += 1
-            else:
-                cursor.execute(insert_query, (
-                    register_id, prefix, suffix, name, created, modified, status, status_name, core_type, 
-                    core_type_name, body, tickets_data, addresses, entity_types_data, attribute_categories, values, 
-                    classifications_data, secondary_filters_data, geo_epgs_25831, geo_epgs_23031, geo_epgs_4326_latlon, 
-                    image_data
-                ))
-                log_inserts['success'] += 1
-
-        except Exception as insert_error:
-            log_inserts['errors'].append({
-                'tree': name,
-                'error': str(insert_error),
-                'params': tree
-            })
+except Exception as insert_error:
+    log_inserts['errors'].append({
+        'tree': name,
+        'error': str(insert_error),
+        'params': tree
+    })
 
 finally:
     cursor.close()

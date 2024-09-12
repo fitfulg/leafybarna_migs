@@ -11,3 +11,6 @@
 
 - Python 3.x
 - PostgreSQL
+
+TODO: 
+OD_Arbrat_Viari_BCN.json to be updated from time to time
