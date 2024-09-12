@@ -4,4 +4,4 @@ __pycache__/
 venv/
 py_built.py
 py_built_migrations.py
-/app
+app/*
