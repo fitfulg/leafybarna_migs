@@ -1,65 +1,30 @@
-<!-- List tables in leafybarna_db -->
-<p><strong>THIS COMMAND LISTS ALL THE TABLES IN THE LEAFYBARNA_DB DATABASE.</strong></p>
-<pre>\dt</pre>
-
-<!-- Table structure for local_interest_trees -->
-<p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE LOCAL_INTEREST_TREES TABLE, INCLUDING THE COLUMNS AND THEIR TYPES.</strong></p>
-<pre>\d local_interest_trees</pre>
-
-<!-- Export distinct register IDs for local_interest_trees to CSV -->
-<p><strong>THIS COMMAND EXPORTS DISTINCT CREATED DATES FROM THE LOCAL_INTEREST_TREES TABLE TO A CSV FILE.</strong></p>
-<pre>
-    \copy (SELECT DISTINCT created FROM local_interest_trees WHERE created IS NOT NULL ORDER BY created) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/localInterestTrees_created.csv' WITH CSV;
-</pre>
+<!-- Note about local server access -->
+<p><strong>Note: The following links are only accessible through an application running on a local server.</strong></p>
 
 <!-- Filter by district (e.g., District 7) -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY DISTRICT, FOR EXAMPLE, DISTRICT 7.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?district=7" target="_blank">Filter by District: 7</a></p>
-<pre>
-SELECT * FROM local_interest_trees WHERE district_id = 7 LIMIT 10;
-</pre>
 
 <!-- Filter by neighborhood (e.g., Horta) -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY NEIGHBORHOOD, FOR EXAMPLE, 'HORTA'.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?neighborhood=Horta" target="_blank">Filter by Neighborhood: Horta</a></p>
-<pre>
-SELECT * FROM local_interest_trees WHERE neighborhood_name ILIKE '%Horta%' LIMIT 10;
-</pre>
 
 <!-- Filter by name (e.g., Pi Pinyer) -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY NAME, FOR EXAMPLE, 'PI PINYER'.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?name=Pi%20Pinyer" target="_blank">Filter by Name: Pi Pinyer</a></p>
-<pre>
-SELECT * FROM local_interest_trees WHERE name ILIKE '%Pi Pinyer%' LIMIT 10;
-</pre>
 
 <!-- Filter by address (e.g., Passeig de Sant Joan) -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY ADDRESS, FOR EXAMPLE, 'PASSEIG DE SANT JOAN'.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?address=Passeig%20de%20Sant%20Joan" target="_blank">Filter by Address: Passeig de Sant Joan</a></p>
-<pre>
-<!-- Updated query -->
-SELECT * FROM local_interest_trees WHERE address_name ILIKE '%Sant Joan%' LIMIT 10;
-</pre>
 
 <!-- Filter by creation date (e.g., 2021-11-24) -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY CREATION DATE, FOR EXAMPLE, '2021-11-24'.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?created=2021-11-24" target="_blank">Filter by Creation Date: 2021-11-24</a></p>
-<pre>
-<!-- Updated query -->
-SELECT * FROM local_interest_trees WHERE created = '2021-11-24' LIMIT 10;
-</pre>
 
 <!-- Filter by body content (e.g., 'parc urbà') -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY BODY CONTENT, FOR EXAMPLE, 'PARC'.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?body=parc" target="_blank">Filter by Body Content: Parc</a></p>
-<pre>
-<!-- Updated query -->
-SELECT * FROM local_interest_trees WHERE body ILIKE '%parc%' LIMIT 10;
-</pre>
 
 <!-- Combination: Filter by district and name -->
 <p><strong>THIS QUERY FILTERS LOCAL INTEREST TREES BY BOTH DISTRICT AND NAME, FOR EXAMPLE, DISTRICT 7 AND NAME 'PI PINYER'.</strong></p>
 <p><a href="http://127.0.0.1:5000/local-interest-trees?district=7&name=Pi%20Pinyer" target="_blank">Filter by District 7 and Name: Pi Pinyer</a></p>
-<pre>
-SELECT * FROM local_interest_trees WHERE district_id = 7 AND name ILIKE '%Pi Pinyer%' LIMIT 10;
-</pre>

@@ -1,56 +1,20 @@
-<!-- List tables in leafybarna_db -->
-<p><strong>THIS COMMAND LISTS ALL THE TABLES IN THE LEAFYBARNA_DB DATABASE.</strong></p>
-<pre>\dt</pre>
-
-<!-- Table structure for parks_and_gardens -->
-<p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE PARKS_AND_GARDENS TABLE, INCLUDING THE COLUMNS AND THEIR TYPES.</strong></p>
-<pre>\d parks_and_gardens</pre>
-
-<!-- Export distinct created dates for parks_and_gardens to CSV -->
-<p><strong>THIS COMMAND EXPORTS DISTINCT CREATED DATES FROM THE PARKS_AND_GARDENS TABLE TO A CSV FILE.</strong></p>
-<pre>
-\copy (SELECT DISTINCT created FROM parks_and_gardens WHERE created IS NOT NULL ORDER BY created) TO '/mnt/c/Users/rc84e/Desktop/DEV/LeafyBarna/parksAndGardens_created_dates.csv' WITH CSV;
-</pre>
+<!-- Note about local server access -->
+<p><strong>Note: The following links are only accessible through an application running on a local server.</strong></p>
 
 <!-- Filter by District 7 -->
-<p><strong>THIS QUERY FILTERS PARKS AND GARDENS LOCATED IN DISTRICT 7.</strong></p>
 <p><a href="http://127.0.0.1:5000/parks-and-gardens?district=7" target="_blank">Filter by District 7</a></p>
-<pre>
-SELECT * FROM parks_and_gardens WHERE district_id = 7 LIMIT 10;
-</pre>
 
 <!-- Filter by Neighborhood (e.g., Horta-Guinardó) -->
-<p><strong>THIS QUERY FILTERS PARKS AND GARDENS BY NEIGHBORHOOD, FOR EXAMPLE, 'EL GUINARDÓ'.</strong></p>
 <p><a href="http://127.0.0.1:5000/parks-and-gardens?neighborhood=Horta-Guinardó" target="_blank">Filter by Neighborhood: Horta-Guinardó</a></p>
-<pre>
-    SELECT * FROM parks_and_gardens WHERE neighborhood_name ILIKE '%el Guinardó%' LIMIT 10;
-
-</pre>
 
 <!-- Filter by name (e.g., Jardins de Can Senillosa) -->
-<p><strong>THIS QUERY FILTERS PARKS AND GARDENS BY NAME, FOR EXAMPLE, 'JARDINS DE CAN SENILLOSA'.</strong></p>
 <p><a href="http://127.0.0.1:5000/parks-and-gardens?name=Jardins%20de%20Can%20Senillosa" target="_blank">Filter by Name: Jardins de Can Senillosa</a></p>
-<pre>
-SELECT * FROM parks_and_gardens WHERE name ILIKE '%Jardins de Can Senillosa%' LIMIT 10;
-</pre>
 
 <!-- Filter by created date (e.g., 2020-01-10) -->
-<p><strong>THIS QUERY FILTERS PARKS AND GARDENS BY CREATED DATE, FOR EXAMPLE, '2020-01-10'.</strong></p>
 <p><a href="http://127.0.0.1:5000/parks-and-gardens?created=2020-01-10" target="_blank">Filter by Created Date: 2020-01-10</a></p>
-<pre>
-SELECT * FROM parks_and_gardens WHERE created = '2020-01-10' LIMIT 10;
-</pre>
 
 <!-- Combination: Filter by district and name -->
-<p><strong>THIS QUERY FILTERS PARKS AND GARDENS BY BOTH DISTRICT AND NAME, FOR EXAMPLE, DISTRICT 7 AND NAME 'ESPAI LÚDIC-ESPORTIU DE LA CAMPA'.</strong></p>
 <p><a href="http://127.0.0.1:5000/parks-and-gardens?district=7&name=Espai%20L%C3%BAdic-Esportiu%20de%20la%20Campa" target="_blank">Filter by District 7 and Name: Espai Lúdic-Esportiu de la Campa</a></p>
-<pre>
-SELECT * FROM parks_and_gardens WHERE district_id = 7 AND name ILIKE '%Espai Lúdic-Esportiu de la Campa%' LIMIT 10;
-</pre>
 
 <!-- Filter by zip code (e.g., 08035) -->
-<p><strong>THIS QUERY FILTERS PARKS AND GARDENS BY ZIP CODE, FOR EXAMPLE, '08035'.</strong></p>
 <p><a href="http://127.0.0.1:5000/parks-and-gardens?zipcode=08035" target="_blank">Filter by Zip Code: 08035</a></p>
-<pre>
-SELECT * FROM parks_and_gardens WHERE zip_code = '08035' LIMIT 10;
-</pre>
