@@ -1,8 +1,6 @@
-# LeafyBarna
+# LeafyBarna database
 
-**LeafyBarna** is a project designed to visualize and manage botanical data for the city of Barcelona. The project integrates various open data sources to provide insights into the flora and green spaces across the city.
-
-## Data Sources
+## Data sources where to migrate from:
 
 - [Trees in the Parks of Barcelona](https://opendata-ajuntament.barcelona.cat/resources/bcn/Arbrat/OD_Arbrat_Parcs_BCN.json)
 - [Parks and Gardens of Barcelona](https://opendata-ajuntament.barcelona.cat/data/dataset/5d43ed16-f93a-442f-8853-4bf2191b2d39/resource/b42797a8-3be7-4504-ad7c-12174de222de/download)
@@ -13,4 +11,3 @@
 
 - Python 3.x
 - PostgreSQL
-- Frontend will be made with Angular or React :P
