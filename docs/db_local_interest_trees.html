@@ -18,6 +18,23 @@
     <p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE LOCAL_INTEREST_TREES TABLE, INCLUDING THE COLUMNS AND THEIR TYPES:</strong></p>
     <pre>\d local_interest_trees</pre>
 
+
+
+    <!-- Counts the number of records in local_interest_trees -->
+    <p><strong>THIS COMMAND COUNTS THE NUMBER OF RECORDS IN THE LOCAL_INTEREST_TREES TABLE.</strong></p>
+    <pre>
+        SELECT COUNT(register_id) FROM local_interest_trees;
+    </pre>
+
+    <!-- List all records from local_interest_trees by its id (register_id) -->
+    <p><strong>THIS COMMAND LISTS ALL RECORDS FROM THE LOCAL_INTEREST_TREES TABLE BY ITS ID (REGISTER_ID):</strong></p>
+    <pre>
+        SELECT register_id FROM parks_and_gardens;
+    </pre>
+
+
+    
+
     <!-- Select all columns from local_interest_trees -->
     <p><strong>THIS COMMAND SELECTS ALL COLUMNS FROM THE LOCAL_INTEREST_TREES TABLE:</strong></p>
     <pre>SELECT * FROM local_interest_trees;</pre>

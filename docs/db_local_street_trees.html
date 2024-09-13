@@ -7,7 +7,25 @@
 
 <!-- Table structure for local_street_trees -->
 <p><strong>THIS COMMAND SHOWS THE STRUCTURE OF THE LOCAL_STREET_TREES TABLE, INCLUDING THE COLUMNS AND THEIR TYPES.</strong></p>
-<pre>\d local_street_trees</pre>
+<pre>
+    \d local_street_trees
+</pre>
+
+
+
+
+<!-- Counts the number of records in local_street_trees -->
+<p><strong>THIS COMMAND COUNTS THE NUMBER OF RECORDS IN THE LOCAL_STREET_TREES TABLE.</strong></p>
+<pre>
+    SELECT COUNT(id) FROM local_street_trees;
+</pre>
+
+<!-- List all records from local_street_trees by its id (codi) -->
+<p><strong>THIS COMMAND LISTS ALL RECORDS FROM THE LOCAL_STREET_TREES TABLE BY ITS ID (CODI):</strong></p>
+<pre>SELECT codi FROM local_street_trees;</pre>
+
+
+
 
 <!-- Filter by District 8 -->
 <p><strong>THIS QUERY FILTERS LOCAL STREET TREES LOCATED IN DISTRICT 8.</strong></p>
