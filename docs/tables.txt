@@ -27,7 +27,7 @@
 
 
 
-                           Table "public.local_interest_trees"
+                          Table "public.local_interest_trees"
          Column         |            Type             | Collation | Nullable | Default
 ------------------------+-----------------------------+-----------+----------+---------
  register_id            | bigint                      |           | not null |
@@ -52,11 +52,10 @@
  geo_epgs_23031         | jsonb                       |           |          |
  geo_epgs_4326_latlon   | jsonb                       |           |          |
  image_data             | jsonb                       |           |          |
- (to add: 
- gallery_data: [],
- )
+ gallery_data           | jsonb                       |           |          |
 Indexes:
     "local_interest_trees_pkey" PRIMARY KEY, btree (register_id)
+    
 
 
                            Table "public.parks_and_gardens"
