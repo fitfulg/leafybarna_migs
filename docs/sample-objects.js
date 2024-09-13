@@ -287,7 +287,30 @@ const PAG = {
 }
 
 // local_street_trees of Barcelona sample object (JSON Object):
-const ST = { "codi": "0000025AR", "x_etrs89": 430270.562, "y_etrs89": 4587637.9979999997, "latitud": 41.4372866, "longitud": 2.1653528, "tipus_element": "ARBRE VIARI", "espai_verd": "Central de Nou Barris, Parc", "adreca": "Pg Fabra i Puig, 450", "cat_especie_id": 2336, "nom_cientific": "Fraxinus angustifolia 'Raywood'", "nom_castella": "-", "nom_catala": "-", "categoria_arbrat": "PRIMERA", "data_plantacio": "2022-02-15", "tipus_aigua": null, "tipus_reg": "GOTEIG AVARIAT", "geom": "POINT (430270.561661092 4587637.99844993)", "catalogacio": null, "codi_barri": 48.0, "nom_barri": "LA GUINEUETA", "codi_districte": 8.0, "nom_districte": "NOU BARRIS" }
+const ST = {
+  "codi": "0000025AR",
+  "x_etrs89": 430270.562,
+  "y_etrs89": 4587637.9979999997,
+  "latitud": 41.4372866,
+  "longitud": 2.1653528,
+  "tipus_element": "ARBRE VIARI",
+  "espai_verd": "Central de Nou Barris, Parc",
+  "adreca": "Pg Fabra i Puig, 450",
+  "cat_especie_id": 2336,
+  "nom_cientific": "Fraxinus angustifolia 'Raywood'",
+  "nom_castella": "-",
+  "nom_catala": "-",
+  "categoria_arbrat": "PRIMERA",
+  "data_plantacio": "2022-02-15",
+  "tipus_aigua": null,
+  "tipus_reg": "GOTEIG AVARIAT",
+  "geom": "POINT (430270.561661092 4587637.99844993)",
+  "catalogacio": null,
+  "codi_barri": 48.0,
+  "nom_barri": "LA GUINEUETA",
+  "codi_districte": 8.0,
+  "nom_districte": "NOU BARRIS"
+}
 
 // local_interest_trees of Barcelona sample object:
 const LIT = {

@@ -1,0 +1,141 @@
+                                         Table "public.local_street_trees"
+      Column      |          Type          | Collation | Nullable |                    Default
+------------------+------------------------+-----------+----------+------------------------------------------------
+ id               | integer                |           | not null | nextval('local_street_trees_id_seq'::regclass)
+ codi             | character varying(255) |           |          |
+ x_etrs89         | numeric                |           |          |
+ y_etrs89         | numeric                |           |          |
+ latitud          | numeric                |           |          |
+ longitud         | numeric                |           |          |
+ tipus_element    | character varying(255) |           |          |
+ espai_verd       | character varying(255) |           |          |
+ adreca           | character varying(255) |           |          |
+ cat_especie_id   | integer                |           |          |
+ nom_cientific    | character varying(255) |           |          |
+ nom_castella     | character varying(255) |           |          |
+ nom_catala       | character varying(255) |           |          |
+ categoria_arbrat | character varying(255) |           |          |
+ data_plantacio   | date                   |           |          |
+ tipus_aigua      | character varying(255) |           |          |
+ tipus_reg        | character varying(255) |           |          |
+ geom             | character varying(255) |           |          |
+ catalogacio      | character varying(255) |           |          |
+ codi_barri       | character varying(255) |           |          |
+ nom_barri        | character varying(255) |           |          |
+ codi_districte   | character varying(255) |           |          |
+ nom_districte    | character varying(255) |           |          |
+
+
+
+                           Table "public.local_interest_trees"
+         Column         |            Type             | Collation | Nullable | Default
+------------------------+-----------------------------+-----------+----------+---------
+ register_id            | bigint                      |           | not null |
+ prefix                 | character varying(255)      |           |          |
+ suffix                 | character varying(255)      |           |          |
+ name                   | character varying(255)      |           | not null |
+ created                | timestamp without time zone |           |          |
+ modified               | timestamp without time zone |           |          |
+ status                 | character varying(50)       |           |          |
+ status_name            | character varying(50)       |           |          |
+ core_type              | character varying(50)       |           |          |
+ core_type_name         | character varying(50)       |           |          |
+ body                   | text                        |           |          |
+ tickets_data           | jsonb                       |           |          |
+ addresses              | jsonb                       |           |          |
+ entity_types_data      | jsonb                       |           |          |
+ attribute_categories   | jsonb                       |           |          |
+ values                 | jsonb                       |           |          |
+ classifications_data   | jsonb                       |           |          |
+ secondary_filters_data | jsonb                       |           |          |
+ geo_epgs_25831         | jsonb                       |           |          |
+ geo_epgs_23031         | jsonb                       |           |          |
+ geo_epgs_4326_latlon   | jsonb                       |           |          |
+ image_data             | jsonb                       |           |          |
+ (to add: 
+ gallery_data: [],
+ )
+Indexes:
+    "local_interest_trees_pkey" PRIMARY KEY, btree (register_id)
+
+
+                           Table "public.parks_and_gardens"
+         Column         |            Type             | Collation | Nullable | Default
+------------------------+-----------------------------+-----------+----------+---------
+ register_id            | bigint                      |           | not null |
+ prefix                 | character varying(255)      |           |          |
+ suffix                 | character varying(255)      |           |          |
+ name                   | character varying(255)      |           |          |
+ created                | timestamp without time zone |           |          |
+ modified               | timestamp without time zone |           |          |
+ status                 | character varying(50)       |           |          |
+ status_name            | character varying(50)       |           |          |
+ core_type              | character varying(50)       |           |          |
+ core_type_name         | character varying(50)       |           |          |
+ body                   | text                        |           |          |
+ tickets_data           | jsonb                       |           |          |
+ addresses              | jsonb                       |           |          |
+ entity_types_data      | jsonb                       |           |          |
+ attribute_categories   | jsonb                       |           |          |
+ values                 | jsonb                       |           |          |
+ from_relationships     | jsonb                       |           |          |
+ to_relationships       | jsonb                       |           |          |
+ classifications_data   | jsonb                       |           |          |
+ secondary_filters_data | jsonb                       |           |          |
+ timetable              | jsonb                       |           |          |
+ image_data             | jsonb                       |           |          |
+ gallery_data           | jsonb                       |           |          |
+ warnings               | jsonb                       |           |          |
+ geo_epgs_25831         | jsonb                       |           |          |
+ geo_epgs_23031         | jsonb                       |           |          |
+ geo_epgs_4326_latlon   | jsonb                       |           |          |
+ is_section_of_data     | jsonb                       |           |          |
+ sections_data          | jsonb                       |           |          |
+ start_date             | timestamp without time zone |           |          |
+ end_date               | timestamp without time zone |           |          |
+ estimated_dates        | jsonb                       |           |          |
+ languages_data         | jsonb                       |           |          |
+ type                   | character varying(50)       |           |          |
+ type_name              | character varying(50)       |           |          |
+ period                 | character varying(50)       |           |          |
+ period_name            | character varying(50)       |           |          |
+event_status_name      | character varying(50)       |           |          |
+ event_status           | character varying(50)       |           |          |
+ ical                   | text                        |           |          |
+Indexes:
+    "parks_and_gardens_pkey" PRIMARY KEY, btree (register_id)
+
+
+
+
+
+                                         Table "public.trees_in_parks"
+      Column      |          Type          | Collation | Nullable |                  Default
+------------------+------------------------+-----------+----------+--------------------------------------------
+ id               | integer                |           | not null | nextval('trees_in_parks_id_seq'::regclass)
+ codi             | character varying(255) |           |          |
+ nom_cientific    | character varying(255) |           |          |
+ nom_castella     | character varying(255) |           |          |
+ nom_catala       | character varying(255) |           |          |
+ adreca           | character varying(255) |           |          |
+ tipus_reg        | character varying(255) |           |          |
+ data_plantacio   | date                   |           |          |
+ x_etrs89         | numeric                |           |          |
+ y_etrs89         | numeric                |           |          |
+ latitud          | numeric                |           |          |
+ longitud         | numeric                |           |          |
+ nom_parc         | character varying(255) |           |          |
+ codi_barri       | integer                |           |          |
+ nom_barri        | character varying(255) |           |          |
+ codi_districte   | integer                |           |          |
+ nom_districte    | character varying(255) |           |          |
+ espai_verd       | character varying(255) |           |          |
+ catalogacio      | character varying(255) |           |          |
+ tipus_element    | character varying(255) |           |          |
+ categoria_arbrat | character varying(255) |           |          |
+ cat_especie_id   | integer                |           |          |
+ tipus_aigua      | character varying(255) |           |          |
+Indexes:
+    "trees_in_parks_pkey" PRIMARY KEY, btree (id)
+
+

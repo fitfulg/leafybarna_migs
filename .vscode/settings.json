@@ -3,8 +3,7 @@
         "es"
     ],
     "spellright.documentTypes": [
-        "latex",
-        "plaintext"
+        "latex"
     ],
     "python.analysis.extraPaths": [
         "./migrations"
